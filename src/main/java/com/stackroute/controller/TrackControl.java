@@ -17,11 +17,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/")
+@Configuration
+@PropertySource("classpath:application.properties")
 public class TrackControl {
     
-    @Autowired
+    
     private TrackService trackService;
-
+    
+    @Autowired
     public TrackControl(TrackService trackService) {
         this.trackService = trackService;
     }
@@ -30,7 +33,7 @@ public class TrackControl {
         this.trackService = trackService;
     }
 
-
+    @ApiOperation(value = "Save track")
     @PostMapping(value = "track")
     public ResponseEntity<Track> saveTrack(@RequestBody Track track)
     {
@@ -48,14 +51,15 @@ public class TrackControl {
     }
 
 
-
+    @ApiOperation(value = "Get All Track")
     @GetMapping(value = "track")
     public ResponseEntity<List<Track>> showAllTracks() {
         List<Track > trackOne = trackService.showAllTracks();
         return new ResponseEntity<List<Track>>(trackOne, HttpStatus.OK);
     }
 
-
+    
+    @ApiOperation(value = "Update Track")
     @PutMapping(value = "track")
     public ResponseEntity<Track> updateTrack(@RequestBody Track track)
     {
@@ -72,7 +76,7 @@ public class TrackControl {
 
     }
 
-
+    @ApiOperation(value = "Delete Track")
     @DeleteMapping(value = "track")
     public ResponseEntity<String > deleteTrack(@RequestBody Track track)
     {
@@ -88,11 +92,4 @@ public class TrackControl {
         return responseEntity;
 
     }
-
-
-   /* @GetMapping(value = "track/{trackName}")
-    public ResponseEntity<List<Track>> getTrackByName(@PathVariable("trackName") String trackName) throws Exception {
-        List<Track> trackOne = trackService.getTrackByName(trackName);
-        return new ResponseEntity<List<Track>>(trackOne, HttpStatus.OK);
-    }*/
 }
