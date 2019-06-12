@@ -10,20 +10,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class TrackGlobalExceptionHandling extends ResponseEntityExceptionHandler {
-
     @ExceptionHandler(value = {TrackAlreadyExistsException.class})
-    public ResponseEntity<ResponseForError> globalTrackAlreadyExistsException(TrackAlreadyExistsException ex) throws Exception{
-        ResponseForError responseForError = new ResponseForError();
-        responseForError.setErrorID(HttpStatus.BAD_REQUEST.value());
-        responseForError.setErrorMessageInformation(ex.getMessage());
-        return new ResponseEntity<>(responseForError,HttpStatus.BAD_REQUEST);
+    public ResponseEntity<object> exception(TrackNotFoundException ex){{
+        return new ResponseEntity<>("track not found", HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(value = {TrackNotFoundException.class})
-    public ResponseEntity<ResponseForError> globalTrackNotFoundException(TrackNotFoundException ex) throws Exception{
-        ResponseForError responseForError = new ResponseForError();
-        responseForError.setErrorID(HttpStatus.BAD_REQUEST.value());
-        responseForError.setErrorMessageInformation(ex.getMessage());
-        return new ResponseEntity<>(responseForError,HttpStatus.BAD_REQUEST);
+    @ExceptionHandler(value = {TrackAlreadyExistexception.class})
+    public ResponseEntity<object> exception(TrackAlreadyException ex){
+        return new ResponseEntity<>("track already exists", HttpStatus.NOT_FOUND);
     }
 }
